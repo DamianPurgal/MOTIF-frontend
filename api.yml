@@ -1,0 +1,413 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: MOTIF
+tags:
+  - name: "User"
+  - name: "HelpRequest"
+  - name: "Alert"
+servers:
+  - url: "http://localhost:8080"
+    description: "Local server"
+paths:
+  /users:
+    get:
+      summary: Get all users
+      tags:
+        - "User"
+      operationId: getAllUsers
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Register user
+      tags:
+        - "User"
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      summary: Edit user
+      tags:
+        - "User"
+      operationId: editUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEdit'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{username}:
+    delete:
+      summary: Delete user
+      tags:
+        - "User"
+      operationId: deleteUser
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "OK"
+  /helpRequests:
+    post:
+      summary: Add help request
+      tags:
+        - "HelpRequest"
+      operationId: addHelpRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelpRequestAdd'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelpRequest'
+    get:
+      summary: Get my help requests pageable
+      tags:
+        - "HelpRequest"
+      operationId: getHelpRequestsPageable
+      parameters:
+        - name: requestDto
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/RequestPageable'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelpRequestPage'
+  /helpRequests/admin:
+    get:
+      summary: Get all help requests pageable
+      tags:
+        - "HelpRequest"
+      operationId: getHelpRequestsAdminPageable
+      parameters:
+        - name: requestDto
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/RequestPageable'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelpRequestPage'
+
+  /helpRequests/{helpRequestId}:
+    put:
+      summary: Edit help request
+      tags:
+        - "HelpRequest"
+      operationId: editHelpRequest
+      parameters:
+        - name: helpRequestId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelpRequestEdit'
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelpRequest'
+  /alerts:
+    get:
+      summary: Get all my alerts pageable
+      tags:
+        - "Alert"
+      operationId: getAlertsOfUserPageable
+      parameters:
+        - name: requestDto
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/RequestPageable'
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertPage'
+  /alerts/unread:
+    get:
+      summary: Get my unread alerts
+      tags:
+        - "Alert"
+      operationId: getAllUnreadAlertsOfUser
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Alert'
+
+components:
+  schemas:
+    User:
+      description: User
+      type: object
+      properties:
+        username:
+          description: username
+          type: string
+          example: "User1234"
+          minLength: 4
+          maxLength: 50
+    UserEdit:
+      description: User edit model
+      type: object
+      properties:
+        username:
+          description: username
+          type: string
+          example: "User1234"
+          minLength: 4
+          maxLength: 50
+        oldPassword:
+          description: old password
+          type: string
+          example: "oldPassword"
+          minLength: 5
+          maxLength: 50
+        newPassword:
+          description: new password
+          type: string
+          example: "newPassword"
+          minLength: 5
+          maxLength: 50
+    UserRegister:
+      description: User register model
+      type: object
+      properties:
+        username:
+          description: username
+          type: string
+          example: "User1234"
+          minLength: 4
+          maxLength: 50
+        password:
+          description: new password
+          type: string
+          example: "password123"
+          minLength: 5
+          maxLength: 50
+    HelpRequestPage:
+      description: Help requests
+      type: object
+      required:
+        - totalNumberOfPages
+        - totalNumberOfElements
+        - requests
+      properties:
+        totalNumberOfPages:
+          description: Total number of pages
+          type: integer
+          format: int32
+          example: 123
+        totalNumberOfElements:
+          description: Total number of pages
+          type: integer
+          format: int32
+          example: 123
+        requests:
+          description: Retrieved requests
+          type: array
+          items:
+            $ref: "#/components/schemas/HelpRequest"
+    HelpRequest:
+      description: Help request
+      type: object
+      properties:
+        id:
+          description: id
+          type: integer
+          format: int64
+          example: 123
+        description:
+          description: description
+          type: string
+          example: "description"
+        response:
+          description: response
+          type: string
+          example: "response"
+        requester:
+          description: requester
+          type: string
+          example: "requester"
+        date:
+          type: string
+          format: date-time
+          description: Creation date and time
+          example: "2021-01-30T08:30:00Z"
+        status:
+          description: Help request status
+          type: string
+          enum:
+            - NEW
+            - CLOSED
+            - OPEN
+    HelpRequestAdd:
+      description: Help request add
+      type: object
+      properties:
+        description:
+          description: description
+          type: string
+          example: "description"
+    HelpRequestEdit:
+      description: Help request edit
+      type: object
+      properties:
+        response:
+          description: response
+          type: string
+          example: "response"
+        status:
+          description: Help request status
+          type: string
+          enum:
+            - NEW
+            - CLOSED
+            - OPEN
+    RequestPageable:
+      description: Pageable request
+      type: object
+      properties:
+        page:
+          description: page
+          type: integer
+          format: int32
+          example: 0
+        size:
+          description: size
+          type: integer
+          format: int32
+          example: 10
+    Alert:
+      description: Alert
+      type: object
+      properties:
+        id:
+          description: alert id
+          type: integer
+          format: int64
+          example: 0
+        title:
+          description: title
+          type: string
+          example: "title"
+        description:
+          description: description
+          type: string
+          example: "description"
+        date:
+          type: string
+          format: date-time
+          description: Creation date and time
+          example: "2021-01-30T08:30:00Z"
+        priority:
+          description: alert priority
+          type: integer
+          format: int64
+          example: 0
+        type:
+          description: Alert type
+          type: string
+          enum:
+            - BASIC
+            - HELP_REQUEST
+        style:
+          description: Alert style
+          type: string
+          enum:
+            - BASIC
+            - WARNING
+            - INFORMATION
+        seen:
+          description: alert seen
+          type: boolean
+          example: false
+        user:
+          description: user username
+          type: string
+          example: "user123"
+    AlertPage:
+      description: Help requests
+      type: object
+      required:
+        - totalNumberOfPages
+        - totalNumberOfElements
+        - alerts
+      properties:
+        totalNumberOfPages:
+          description: Total number of pages
+          type: integer
+          format: int32
+          example: 123
+        totalNumberOfElements:
+          description: Total number of pages
+          type: integer
+          format: int32
+          example: 123
+        alerts:
+          description: Retrieved alerts
+          type: array
+          items:
+            $ref: "#/components/schemas/Alert"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: jwt
+security:
+  - bearerAuth: [ ]

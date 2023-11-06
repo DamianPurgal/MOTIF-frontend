@@ -1,3 +1,6 @@
+.navbar-container {
+  height: 55px;
+}
 .navbar {
   display: flex;
   flex-direction: row;
@@ -28,4 +31,13 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+}
+.sidenav {
+  top: 55px;
+  padding: 60px;
+  height: 70%;
+  border-left: 1px solid #3f51b5;
+  border-bottom: 1px solid #3f51b5;
+  border-top: 1px solid #3f51b5;
+  position:fixed;
 }

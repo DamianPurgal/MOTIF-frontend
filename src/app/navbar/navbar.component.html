@@ -1,5 +1,5 @@
 <p>
-  <mat-toolbar color="primary">
+  <mat-toolbar color="primary" class="navbar-container">
     <div class="navbar">
       <div class="navbar-left">
         <span class="logo" routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">MOTIF</span>
@@ -15,7 +15,7 @@
         <ng-container *ngIf="jwtAuthService.isUserLogged()">
           <button mat-button class="optionButton" (click)="logout()">Logout</button>
 
-          <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+          <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="drawer.toggle()">
             <mat-icon matBadge="15" matBadgeColor="warn">notification_important</mat-icon>
           </button>
         </ng-container>
@@ -26,4 +26,9 @@
     </div>
 
   </mat-toolbar>
+  <mat-drawer-container>
+    <mat-drawer #drawer class="sidenav" mode="over" position="end">
+      <p>Auto-resizing sidenav</p>
+    </mat-drawer>
+  </mat-drawer-container>
 </p>
