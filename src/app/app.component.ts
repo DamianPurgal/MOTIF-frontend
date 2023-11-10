@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {JwtAuthService} from "./service/authentication/jwt-auth.service";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'motifFrontend';
+  constructor(public jwtAuthService: JwtAuthService) {
+  }
+
 }

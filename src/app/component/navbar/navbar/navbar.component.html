@@ -1,0 +1,75 @@
+<p>
+  <mat-toolbar color="primary" class="navbar-container">
+    <div class="navbar">
+      <div class="navbar-left">
+        <span class="logo" routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">MOTIF</span>
+        <button mat-button class="optionButton">Mapa</button>
+        <button mat-button class="optionButton">Rynek</button>
+        <button mat-button class="optionButton">Wiadomosci</button>
+        <button mat-button class="optionButton">Oferty</button>
+        <button mat-button class="optionButton">Zgłoszenia</button>
+
+      </div>
+      <div class="navbar-right">
+        <button mat-button class="optionButton" (click)="logout()">Logout</button>
+
+        <button mat-icon-button (click)="drawer.toggle()" [@alertAnimationRotate]="alertAnimationRotate"
+                [@alertAnimationChangeColor]="alertAnimationChangeColor">
+          <mat-icon *ngIf="newAlertsAmount > 0" matBadge="{{newAlertsAmount}}" matBadgeColor="warn">
+            notification_importantalertAnimationRotate
+          </mat-icon>
+          <mat-icon *ngIf="newAlertsAmount <= 0">notification_important</mat-icon>
+        </button>
+      </div>
+    </div>
+
+  </mat-toolbar>
+  <mat-drawer-container>
+    <mat-drawer #drawer (opened)="alertsOpened()" (openedChange)="alertsOpenStateChanged($event)" class="sidenav"
+                mode="over" position="end">
+      <div class="sidebar-container">
+        <mat-tab-group class="sidebar-group" (selectedTabChange)="tabChanged($event)">
+          <mat-tab label="Nowe">
+            <div class="new-alerts-container sidebar-group-content">
+              <ng-container *ngIf="isLoadingNewAlerts">
+                <mat-spinner class="loading-icon" [@enterAnimation] [diameter]="100"></mat-spinner>
+              </ng-container>
+              <ng-container *ngIf="!isLoadingNewAlerts">
+                <app-alert *ngFor="let newAlert of newAlerts | alert" [alert]="newAlert"
+                           [@enterAnimationLeft]></app-alert>
+                <div class="info-text" *ngIf="newAlerts.length === 0">
+                  BRAK NOWYCH POWIADOMIEŃ
+                </div>
+              </ng-container>
+            </div>
+          </mat-tab>
+          <mat-tab label="Odczytane">
+            <div class="sidebar-group-content">
+              <mat-paginator #paginator
+                             (page)="handlePageEvent($event)"
+                             [length]="length"
+                             [pageSize]="pageSize"
+                             [showFirstLastButtons]="true"
+                             [hidePageSize]="true"
+                             [pageIndex]="pageIndex"
+                             class="paginator"
+                             aria-label="Select page">
+              </mat-paginator>
+
+              <ng-container *ngIf="isLoadingAlerts">
+                <mat-spinner class="loading-icon" [@enterAnimation] [diameter]="100"></mat-spinner>
+              </ng-container>
+
+              <ng-container *ngIf="!isLoadingAlerts">
+                <app-alert *ngFor="let alert of alerts" [alert]="alert" [@enterAnimationLeft]></app-alert>
+              </ng-container>
+
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+      </div>
+
+    </mat-drawer>
+  </mat-drawer-container>
+</p>

@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {NavbarComponent} from './navbar/navbar.component';
+import {NavbarComponent} from './component/navbar/navbar/navbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -15,11 +15,21 @@ import {LoginComponent} from './component/login/login.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatInputModule} from "@angular/material/input";
 import {MainComponent} from './component/main/main.component';
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthorizationService} from "./service/authorization/authorization.service";
-import {HttpClientModule} from '@angular/common/http';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {AlertComponent} from './component/alert/alert.component';
+import {MatCardModule} from '@angular/material/card';
+import {RxStomp} from "@stomp/rx-stomp";
+import {environment} from 'src/environments/environment';
+import {
+  NavbarUnauthenticatedComponent
+} from './component/navbar/navbar-unauthenticated/navbar-unauthenticated.component';
+import {AlertPipe} from './pipe/alert.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +38,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     NotFoundComponent,
     TestComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    AlertComponent,
+    NavbarUnauthenticatedComponent,
+    AlertPipe
   ],
   imports: [
     BrowserModule,
@@ -42,12 +55,33 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatInputModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatButtonToggleModule,
+    MatTabsModule,
+    MatPaginatorModule,
+    MatCardModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS, useClass: AuthorizationService, multi: true
-    }
+    },
+    {
+      provide: RxStomp,
+      useFactory: () => {
+        const rxStomp = new RxStomp();
+        rxStomp.configure({
+          brokerURL: environment.wsUrl,
+          connectHeaders: {
+            Authorization: sessionStorage.getItem('accessToken')!
+          },
+          beforeConnect: client => {
+            console.log(client.stompClient.connectHeaders);
+          }
+        });
+        rxStomp.activate();
+        return rxStomp;
+      },
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -15,16 +15,13 @@
       <mat-form-field appearance="outline" class="form-input">
         <mat-label>Password</mat-label>
         <input matInput [type]="passwordHide ? 'password' : 'text'" (keydown.enter)="login()" #passwordInput>
-        <button mat-icon-button matSuffix (click)="passwordHide = !passwordHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordHide">
+        <button mat-icon-button matSuffix (click)="passwordHide = !passwordHide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="passwordHide">
           <mat-icon style="color: #3f51b5;">{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
 
       <button mat-flat-button color="primary" (click)="login()">LOGIN</button>
-    </ng-container>
-
-    <ng-container *ngIf="isLoading">
-      <mat-spinner *ngIf="isLoading" class="loading-icon" [@enterAnimation] [diameter]="50"></mat-spinner>
     </ng-container>
 
   </div>

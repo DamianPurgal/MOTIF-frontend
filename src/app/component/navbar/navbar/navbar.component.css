@@ -1,0 +1,81 @@
+.navbar-container {
+  height: 55px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logo {
+  margin-left: 20px;
+  margin-right: 12px;
+  display: flex;
+  letter-spacing: 5px;
+  font-size: 24px;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.optionButton {
+  margin-right: 5px;
+}
+
+.navbar-left {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navbar-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sidenav {
+  top: 55px;
+  padding: 5px;
+  min-width: 500px;
+  max-height: 70%;
+  border-left: 1px solid #3f51b5;
+  border-bottom: 1px solid #3f51b5;
+  border-top: 1px solid #3f51b5;
+  position: fixed;
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar-group {
+  width: 100%;
+}
+
+.sidebar-group-content {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.paginator {
+  width: 100%;
+}
+
+.info-text {
+  letter-spacing: 3px;
+  color: #3f51b5;
+  font-style: italic;
+  margin-top: 60px;
+  font-size: 16px;
+}

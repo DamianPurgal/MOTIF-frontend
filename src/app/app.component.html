@@ -1,2 +1,8 @@
-<app-navbar></app-navbar>
+<ng-container *ngIf="jwtAuthService.isUserLogged()">
+  <app-navbar></app-navbar>
+</ng-container>
+<ng-container *ngIf="!jwtAuthService.isUserLogged()">
+  <app-navbar-unauthenticated></app-navbar-unauthenticated>
+</ng-container>
+
 <router-outlet></router-outlet>

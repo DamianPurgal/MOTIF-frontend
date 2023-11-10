@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.module.ts
 api/alert.service.ts
@@ -12,6 +11,7 @@ git_push.sh
 index.ts
 model/alert.ts
 model/alertPage.ts
+model/alertStatistics.ts
 model/helpRequest.ts
 model/helpRequestAdd.ts
 model/helpRequestEdit.ts

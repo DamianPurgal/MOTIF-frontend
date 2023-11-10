@@ -189,6 +189,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Alert'
+  /alerts/statistics:
+    get:
+      summary: Get my alert statistics
+      tags:
+        - "Alert"
+      operationId: getAlertStatisticsOfUser
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertStatistics'
 
 components:
   schemas:
@@ -404,6 +417,15 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Alert"
+    AlertStatistics:
+      description: Alert statistics
+      type: object
+      properties:
+        unreadAlerts:
+          description: unread Alerts
+          type: integer
+          format: int32
+          example: 0
   securitySchemes:
     bearerAuth:
       type: http

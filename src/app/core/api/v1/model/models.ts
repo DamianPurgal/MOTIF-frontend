@@ -1,5 +1,6 @@
 export * from './alert';
 export * from './alertPage';
+export * from './alertStatistics';
 export * from './helpRequest';
 export * from './helpRequestAdd';
 export * from './helpRequestEdit';

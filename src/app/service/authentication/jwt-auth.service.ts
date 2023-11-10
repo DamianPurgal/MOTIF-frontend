@@ -3,6 +3,7 @@ import {map, Observable} from "rxjs";
 import {JwtToken} from "./interfaces/jwt-token";
 import {HttpClient} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {RxStomp} from "@stomp/rx-stomp";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class JwtAuthService {
   private loginURL: string = 'http://localhost:8080/login'
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private stomp: RxStomp) { }
 
   authenticate(username: string, password: string) : Observable<JwtToken> {
     return this.http.post<JwtToken>(this.loginURL, { username: username, password: password })
@@ -30,5 +31,7 @@ export class JwtAuthService {
 
   logoutUser() {
     sessionStorage.removeItem("username");
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.clear();
   }
 }
