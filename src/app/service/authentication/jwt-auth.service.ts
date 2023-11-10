@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {map, Observable} from "rxjs";
 import {JwtToken} from "./interfaces/jwt-token";
 import {HttpClient} from "@angular/common/http";
@@ -11,10 +11,11 @@ import {RxStomp} from "@stomp/rx-stomp";
 export class JwtAuthService {
   private loginURL: string = 'http://localhost:8080/login'
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar, private stomp: RxStomp) { }
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private stomp: RxStomp) {
+  }
 
-  authenticate(username: string, password: string) : Observable<JwtToken> {
-    return this.http.post<JwtToken>(this.loginURL, { username: username, password: password })
+  authenticate(username: string, password: string): Observable<JwtToken> {
+    return this.http.post<JwtToken>(this.loginURL, {username: username, password: password})
       .pipe(
         map(authData => {
           sessionStorage.setItem("username", username);
