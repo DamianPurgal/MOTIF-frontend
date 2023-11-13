@@ -1,0 +1,95 @@
+.alert-type {
+  margin-left: 3px;
+  padding: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 4px;
+  color: white;
+  letter-spacing: 1px;
+  font-family: sans-serif;
+  font-weight: bold;
+  width: 65px;
+  text-align: center;
+}
+
+.alert-type-new {
+  background-color: #61affe;
+}
+
+.alert-type-open {
+  background-color: #fca130;
+}
+
+.alert-type-closed {
+  background-color: #f93e3e;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3px;
+  height: 42px;
+  cursor: pointer;
+}
+
+
+.alert-text {
+  width: 380px;
+  min-width: 380px;
+  height: 20px;
+  overflow: clip;
+  text-overflow: clip;
+  font-family: sans-serif;
+}
+
+.alert-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 4px;
+  width: 500px;
+  transition: 100ms;
+}
+
+.id {
+  font-weight: bold;
+  max-width: 40px;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+.alert-container-new {
+  border: 1px solid #61affe;
+  background-color: rgba(97, 175, 254, 0.1);
+}
+
+.alert-container-new:hover {
+  background-color: rgba(97, 175, 254, 0.2);
+  transform: translateX(6px);
+}
+
+.alert-container-open {
+  border: 1px solid #fca130;
+  background-color: rgba(252, 161, 48, 0.1);
+}
+
+.alert-container-open:hover {
+  background-color: rgba(252, 161, 48, 0.2);
+  transform: translateX(6px);
+}
+
+.alert-container-closed {
+  border: 1px solid #f93e3e;
+  background-color: rgba(249, 62, 62, 0.1);
+}
+
+.alert-container-closed:hover {
+  background-color: rgba(249, 62, 62, 0.2);
+  transform: translateX(6px);
+}

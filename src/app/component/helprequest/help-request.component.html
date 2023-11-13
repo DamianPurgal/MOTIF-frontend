@@ -1,0 +1,82 @@
+<div class="main-component">
+  <div class="main-component-left" *ngIf="highlightedRequest == undefined" [@enterAnimation]>
+    <div class="basic">
+      <div class="basic-title">
+        ZGŁOSZENIA
+      </div>
+      <div class="basic-text">
+        Witaj! Jeśli potrzebujesz pomocy, masz pytania lub chcesz podzielić się swoją propozycją, jesteśmy tu, aby Cię
+        wysłuchać i udzielić wsparcia. Skorzystaj z poniższego formularza, aby przekazać nam swoje zgłoszenie.
+        Administrator naszej platformy szybko się z Tobą skontaktuje.
+      </div>
+      <div>
+        <form class="request-form" [formGroup]="addRequestForm">
+          <mat-form-field class="text-field" maxlength="3000">
+            <mat-label>Treść zgłoszenia</mat-label>
+            <textarea matInput placeholder="Ex. Mam pytanie na temat..." name="description"
+                      [(ngModel)]="dialogData.description" formControlName="description"></textarea>
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button color="primary" [mat-dialog-close]="dialogData" [disabled]="addRequestForm.invalid"
+                (click)="formSubmited()">Wyślij zgłoszenie
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="main-component-left" *ngIf="highlightedRequest != undefined" [@enterAnimation]>
+    <div class="return-button">
+      <button mat-icon-button style="background-color: rgba(63,81,181,0.1)" (click)="hideRequest()">
+        <mat-icon style="color: #565656">arrow_back_ios</mat-icon>
+      </button>
+    </div>
+    <div class="highlighted-request-header">
+      <div class="alert-type alert-type-new" *ngIf="highlightedRequest?.status == 'NEW'">
+        NEW
+      </div>
+      <div class="alert-type alert-type-closed" *ngIf="highlightedRequest?.status == 'CLOSED'">
+        CLOSED
+      </div>
+      <div class="alert-type alert-type-open" *ngIf="highlightedRequest?.status == 'OPEN'">
+        OPEN
+      </div>
+      <div style="margin-left: 8px;">
+        ZGŁOSZENIE #{{highlightedRequest!.id}}
+      </div>
+    </div>
+    <div class="highlighted-request-description-container">
+      <div class="badge">
+        TREŚĆ ZGŁOSZENIA
+      </div>
+      <div class="highlighted-request-text">
+        {{highlightedRequest!.description}}
+      </div>
+    </div>
+    <div class="highlighted-request-answer-container">
+      <div class="badge">
+        ODPOWIEDŹ
+      </div>
+      <div class="highlighted-request-text">
+        {{highlightedRequest!.response}}
+      </div>
+    </div>
+  </div>
+  <div class="main-component-right">
+    <div>
+      <mat-paginator #paginator
+                     (page)="handlePageEvent($event)"
+                     [length]="length"
+                     [pageSize]="pageSize"
+                     [showFirstLastButtons]="true"
+                     [hidePageSize]="true"
+                     [pageIndex]="pageIndex"
+                     style="margin-bottom: 12px; border: 1px solid #3f51b5; background-color: rgba(63,81,181,0.1); border-radius: 6px;"
+                     aria-label="Select page">
+      </mat-paginator>
+      <app-help-request-element-in-list *ngFor="let request of helpRequests" [request]="request"
+                                        (requestClickedEventEmitter)="showRequest($event)"
+                                        [@enterAnimation]></app-help-request-element-in-list>
+    </div>
+  </div>
+</div>

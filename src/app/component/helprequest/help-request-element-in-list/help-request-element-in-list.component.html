@@ -1,0 +1,35 @@
+<div class="main-container" (click)="requestClicked()">
+  <div class="alert-container alert-container-open" *ngIf="request.status == 'OPEN'">
+    <div class="alert-type alert-type-open">
+      OPEN
+    </div>
+    <div class="id">
+      #{{request.id}}
+    </div>
+    <div class="alert-text">
+      {{request.description}}
+    </div>
+  </div>
+  <div class="alert-container alert-container-new" *ngIf="request.status == 'NEW'">
+    <div class="alert-type alert-type-new">
+      NEW
+    </div>
+    <div class="id">
+      #{{request.id}}
+    </div>
+    <div class="alert-text">
+      {{request.description}}
+    </div>
+  </div>
+  <div class="alert-container alert-container-closed" *ngIf="request.status == 'CLOSED'">
+    <div class="alert-type alert-type-closed">
+      CLOSED
+    </div>
+    <div class="id">
+      #{{request.id}}
+    </div>
+    <div class="alert-text">
+      {{request.description}}
+    </div>
+  </div>
+</div>

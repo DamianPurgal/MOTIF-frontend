@@ -30,6 +30,13 @@ import {
   NavbarUnauthenticatedComponent
 } from './component/navbar/navbar-unauthenticated/navbar-unauthenticated.component';
 import {AlertPipe} from './pipe/alert.pipe';
+import { HelpRequestComponent } from './component/helprequest/help-request.component';
+import { HelpRequestElementInListComponent } from './component/helprequest/help-request-element-in-list/help-request-element-in-list.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
+import { HelpRequestAdminPanelComponent } from './component/helprequest/help-request-admin-panel/help-request-admin-panel.component';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +48,10 @@ import {AlertPipe} from './pipe/alert.pipe';
     MainComponent,
     AlertComponent,
     NavbarUnauthenticatedComponent,
-    AlertPipe
+    AlertPipe,
+    HelpRequestComponent,
+    HelpRequestElementInListComponent,
+    HelpRequestAdminPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +69,11 @@ import {AlertPipe} from './pipe/alert.pipe';
     MatButtonToggleModule,
     MatTabsModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatRadioModule,
+    FormsModule
   ],
   providers: [
     {

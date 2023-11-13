@@ -14,12 +14,20 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const authRequired = route.data['authRequired'] || false;
+    const adminRequired = route.data['adminRequired'] || false;
 
     if (authRequired) {
       if (!this.jwtAuthService.isUserLogged()) {
         this.router.navigate(['login']);
         return false;
       }
+      if (adminRequired) {
+        if (!this.jwtAuthService.isUserAdmin()) {
+          this.router.navigate(['login']);
+          return false;
+        }
+      }
+      console.log();
     }
     return true;
   }

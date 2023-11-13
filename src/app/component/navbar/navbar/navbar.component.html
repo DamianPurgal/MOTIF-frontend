@@ -7,7 +7,12 @@
         <button mat-button class="optionButton">Rynek</button>
         <button mat-button class="optionButton">Wiadomosci</button>
         <button mat-button class="optionButton">Oferty</button>
-        <button mat-button class="optionButton">Zgłoszenia</button>
+        <button *ngIf="!jwtAuthService.isUserAdmin()" mat-button class="optionButton" routerLink="/helpRequest"
+                routerLinkActive="active" ariaCurrentWhenActive="page">Zgłoszenia
+        </button>
+        <button *ngIf="jwtAuthService.isUserAdmin()" mat-button class="optionButton" routerLink="/admin/helpRequest"
+                routerLinkActive="active" ariaCurrentWhenActive="page">Zgłoszenia
+        </button>
 
       </div>
       <div class="navbar-right">

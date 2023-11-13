@@ -4,6 +4,8 @@ import {JwtToken} from "./interfaces/jwt-token";
 import {HttpClient} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {RxStomp} from "@stomp/rx-stomp";
+import {jwtDecode, JwtHeader, JwtPayload} from 'jwt-decode';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ import {RxStomp} from "@stomp/rx-stomp";
 export class JwtAuthService {
   private loginURL: string = 'http://localhost:8080/login'
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar, private stomp: RxStomp) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private stomp: RxStomp, private router: Router) {
   }
 
   authenticate(username: string, password: string): Observable<JwtToken> {
@@ -20,19 +22,34 @@ export class JwtAuthService {
         map(authData => {
           sessionStorage.setItem("username", username);
           sessionStorage.setItem("accessToken", "Bearer " + authData.accessToken);
+          sessionStorage.setItem("accessTokenWithoutPrefix", authData.accessToken);
           return authData;
         })
       );
   }
 
-  isUserLogged() {
+  isUserLogged(): boolean {
     let user = sessionStorage.getItem("username");
     return !(user === null);
+  }
+
+  isUserAdmin(): boolean {
+    var decodedToken = jwtDecode(sessionStorage.getItem("accessTokenWithoutPrefix")!);
+    var authorities = JSON.parse(JSON.stringify(decodedToken))["authorities"];
+    for (let i = 0; i < authorities.length; i++) {
+      if (authorities[i]['authority'] === 'ROLE_ADMIN') {
+        return true;
+      }
+    }
+    return false;
   }
 
   logoutUser() {
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("accessTokenWithoutPrefix");
     sessionStorage.clear();
+    this.router.navigate(['/']);
   }
+
 }
